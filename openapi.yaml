@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: Sleeper Fantasy Football API
   description: Get NFL player data, league info, drafts, and picks from Sleeper.
-  version: "1.0.0"
+  version: "1.0.1"
 
 servers:
   - url: https://api.sleeper.app/v1
@@ -21,6 +21,7 @@ paths:
       responses:
         "200":
           description: User details
+
   /user/{user_id}/leagues/nfl/{season}:
     get:
       summary: Get all NFL leagues for a user in a given season
@@ -39,6 +40,7 @@ paths:
       responses:
         "200":
           description: List of leagues
+
   /league/{league_id}/drafts:
     get:
       summary: Get all drafts for a league
@@ -52,6 +54,7 @@ paths:
       responses:
         "200":
           description: List of drafts
+
   /draft/{draft_id}/picks:
     get:
       summary: Get all picks for a given draft
@@ -65,10 +68,19 @@ paths:
       responses:
         "200":
           description: List of draft picks
+
   /players/nfl:
     get:
       summary: Get all NFL players with metadata, stats, and projections
       operationId: get_players
+      description: |
+        ⚠️ WARNING: This endpoint returns a very large dataset.
+        - Always filter to **active players only**.
+        - Limit scope to QB, RB, WR, TE, K, DEF.
+        - Sort by projected 2025 fantasy points.
+        - Keep at most the **top 500 players**.
+        - Do not attempt to process the entire dataset.
+        - If the request is too large, switch to using the fallback_player_pool.csv.
       responses:
         "200":
-          description: Player database
+          description: Player database (filtered to top ~500 relevant players)
