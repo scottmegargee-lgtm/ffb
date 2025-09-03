@@ -1,0 +1,69 @@
+openapi: 3.0.1
+info:
+  title: Sleeper Fantasy Football API
+  description: Get NFL player data, league info, drafts, and picks from Sleeper.
+  version: "1.0.0"
+
+servers:
+  - url: https://api.sleeper.app/v1
+
+paths:
+  /user/{username}:
+    get:
+      summary: Get user details by username
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: User details
+  /user/{user_id}/leagues/nfl/{season}:
+    get:
+      summary: Get all NFL leagues for a user in a given season
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: season
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of leagues
+  /league/{league_id}/drafts:
+    get:
+      summary: Get all drafts for a league
+      parameters:
+        - name: league_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of drafts
+  /draft/{draft_id}/picks:
+    get:
+      summary: Get all picks for a given draft
+      parameters:
+        - name: draft_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of draft picks
+  /players/nfl:
+    get:
+      summary: Get all NFL players with metadata, stats, and projections
+      responses:
+        "200":
+          description: Player database
